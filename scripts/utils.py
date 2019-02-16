@@ -64,3 +64,13 @@ def write_json(file_addr, data):
 
 	with open(file_addr, 'w') as fp:
 		json.dump(out_dict, fp)
+
+def read_json(file_addr):
+	with open(file_addr, 'r') as fp:
+		data = json.load(fp)
+
+	return data
+
+def dump_json(file_addr, dict_inp):
+	with open(file_addr, 'w') as fp:
+		json.dump(dict_inp, fp)
