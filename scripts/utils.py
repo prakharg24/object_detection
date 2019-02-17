@@ -22,14 +22,19 @@ def read_csv(file_addr, column_header=False):
 
 	return data, header
 
-def write_csv(file_addr, data, column_header=None):
+def write_csv(file_addr, data, fldr_addr, column_header=None):
 	
+	data_arr = []
+	for ele in data:
+		for bbox in ele['annotations']:
+			data_arr.append([fldr_addr + ele['image_name'], bbox['xmin'], bbox['ymin'], bbox['xmax'], bbox['ymax'], bbox['class']])
+
 	with open(file_addr, mode='w', newline='') as employee_file:
 		employee_writer = csv.writer(employee_file, delimiter=',')
 		if(column_header):
 			employee_writer.writerow(column_header)
 	
-		for ele in data:
+		for ele in data_arr:
 			employee_writer.writerow(ele)
 
 def write_json(file_addr, data):
