@@ -1,5 +1,6 @@
 import csv
 import json
+import numpy as np
 
 def read_csv(file_addr, column_header=False):
 	
