@@ -1,5 +1,7 @@
 import argparse
 import numpy as np
+import os
+
 from utils import read_csv, read_json, write_csv, write_json, dump_json
 
 if __name__ == '__main__':
@@ -16,7 +18,7 @@ if __name__ == '__main__':
 	fldr_arr = args.inputs.split(',')
 	for fldr in fldr_arr:
 		compl_data, header = read_csv(fldr + '/annotation.csv', column_header=True)
-		write_json(fldr + '/annotation_coco.json', compl_data)
+		write_json(fldr + '/annotation_coco.json', compl_data, fldr)
 		
 		json_data = read_json(fldr + '/annotation_coco.json')
 		json_data = json_data['data']
@@ -39,7 +41,7 @@ if __name__ == '__main__':
 	test_dict['data'] = test_data
 	dump_json(args.output + '/test_coco.json', test_dict)
 	
-	write_csv(args.output + '/train_frcnn.txt', train_data, fldr + '/img/')
+	write_csv(args.output + '/train_frcnn.txt', train_data)
 
-	write_csv(args.output + '/test_frcnn.txt', test_data, fldr + '/img/')
+	write_csv(args.output + '/test_frcnn.txt', test_data)
 

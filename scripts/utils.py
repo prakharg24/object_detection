@@ -1,6 +1,7 @@
 import csv
 import json
 import numpy as np
+import os
 
 def read_csv(file_addr, column_header=False):
 	
@@ -22,12 +23,12 @@ def read_csv(file_addr, column_header=False):
 
 	return data, header
 
-def write_csv(file_addr, data, fldr_addr, column_header=None):
+def write_csv(file_addr, data, column_header=None):
 	
 	data_arr = []
 	for ele in data:
 		for bbox in ele['annotations']:
-			data_arr.append([fldr_addr + ele['image_name'], bbox['xmin'], bbox['ymin'], bbox['xmax'], bbox['ymax'], bbox['class']])
+			data_arr.append([ele['image_name'], bbox['xmin'], bbox['ymin'], bbox['xmax'], bbox['ymax'], bbox['class']])
 
 	with open(file_addr, mode='w', newline='') as employee_file:
 		employee_writer = csv.writer(employee_file, delimiter=',')
@@ -37,7 +38,7 @@ def write_csv(file_addr, data, fldr_addr, column_header=None):
 		for ele in data_arr:
 			employee_writer.writerow(ele)
 
-def write_json(file_addr, data):
+def write_json(file_addr, data, fldr_addr):
 	out_dict = {}
 	image_dict = {}
 	iter_img = 0
@@ -57,7 +58,7 @@ def write_json(file_addr, data):
 			temp_img = {}
 			image_dict[ele[0]] = iter_img
 			temp_img['image_id'] = iter_img
-			temp_img['image_name'] = ele[0]
+			temp_img['image_name'] = os.path.join(fldr_addr, 'img/', ele[0])
 			temp_img['width'] = ele[1]
 			temp_img['height'] = ele[2]
 			temp_img['annotations'] = []
