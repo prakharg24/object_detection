@@ -1,4 +1,4 @@
-*The repository contains work under Special Topics in AI course under Prof Chetan Arora.*
+*The repository contains work done in course 'Special Topics in AI' under Prof Chetan Arora.*
 
 *--- Work in Progress ---*
 
