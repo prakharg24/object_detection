@@ -28,7 +28,7 @@ git submodule update --init --recursive <submodule2_name>
 ...
 ```
 
-# Contents
+## Contents
 
 * [Authors and Contribution](#authors-and-contribution)
 * [Copyright](#copyright)
@@ -41,16 +41,18 @@ git submodule update --init --recursive <submodule2_name>
 
 ## Submodules
 
+The work done here is solely possible due to these submodules.
+
 ### [keras-frcnn](https://github.com/kbardool/keras-frcnn/tree/59e12699aea69fa9e15c7ec74694e43087d02240)
 * Keras implementation of Faster R-CNN for object detection
 * Known issues with keras version >=2.2.2
-* keras version=2.1.6 and tensorflow version=1.8.0 recommended for smooth working
+* keras version==2.1.6 and tensorflow version==1.8.0 recommended for smooth working
 
 ## Problem Statement
 
 The task is to create an object detection system which classifies the object and returns a set of bounding box coordinates. This repository includes experimentation with different publicly available pretrained pipelines and some modifications made by us on top of it.
 
-The submodule setup and modifications done here are generalised for any object detection problem statement. The experimentation results are from the following [dataset](https://drive.google.com/file/d/1SU5SE13_rRwHHRga0Kb86-D3wU91u7rp/view?usp=sharing). Find the exact problem statement for the same attached [here](https://github.com/prakharg24/object_detection/blob/master/Assignment.pdf).
+The submodule setup and modifications done here are generalised for any object detection problem statement. The experimentation results are for the following [dataset](https://drive.google.com/file/d/1SU5SE13_rRwHHRga0Kb86-D3wU91u7rp/view?usp=sharing). Find the exact problem statement for the same attached [here](https://github.com/prakharg24/object_detection/blob/master/Assignment.pdf).
 
 
 ## Dataset
@@ -58,5 +60,13 @@ The submodule setup and modifications done here are generalised for any object d
 ### Preparing Dataset
 
 ## Results
+
+### Download Pretrained Weights
+
+Use th
+
+| Joint | Nose | Neck | RShoulder | RElbow | RWrist | LShoulder | LElbow | LWrist | RHip | RKnee |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Index | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
 
 ## References
