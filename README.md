@@ -41,7 +41,7 @@ git submodule update --init --recursive <submodule2_name>
 
 ## Submodules
 
-The work done here is solely possible due to these submodules.
+The work done here is solely possible due to the following repositories. I have cloned these repositories and updated and cleaned them, however the majority of code is from the original repo.
 
 ### [keras-frcnn](https://github.com/kbardool/keras-frcnn/tree/59e12699aea69fa9e15c7ec74694e43087d02240)
 * Keras implementation of Faster R-CNN for object detection
@@ -63,10 +63,12 @@ The submodule setup and modifications done here are generalised for any object d
 
 ### Download Pretrained Weights
 
-Use th
+Use the following weights to get the results specified above
 
-| Joint | Nose | Neck | RShoulder | RElbow | RWrist | LShoulder | LElbow | LWrist | RHip | RKnee |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Index | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+| S.No | Dataset | Number of Epochs | Model Name | Weight File |
+| ---- | ------- | ---------------- | ---------- | ----------- |
+| 1    | [Cow/Dog Dataset]() | xx | Faster R-CNN | [Download](Somelinl) |
+| 2    | [Pascal VOC]() | xx | Faster R-CNN | [Download](dsad) |
+| 3    | Pascal VOC + Cow/Dog Dataset | xx | Faster R-CNN | [Download](d) |
 
 ## References
