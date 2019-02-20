@@ -23,31 +23,32 @@ def get_score(gt_bbox, pred_bbox):
 	for i in range(10):
 		iou.append(0.5 + i*0.05)
 
-	tp, fp, fn = 0, 0
 
-	iou_thres = 0.5
+	for iou_thres in iou:
+		
+		tp, fp, fn = 0, 0
 
-	for pred_ele in pred_bbox:
-		found_match = False
-		for gt_ele in gt_bbox:
-			calc_iou = calculate_overlap(gt_ele, pred_ele)
-			if(calc_iou > iou_thres):
-				if(gt_ele['class']==pred_ele[4]):
-					tp += 1
-					found_match = True
-					break
-		if(not found_match):
-			fp += 1
-
-	for gt_ele in gt_bbox:
-		found_match = False
 		for pred_ele in pred_bbox:
-			calc_iou = calculate_overlap(gt_ele, pred_ele)
-			if(calc_iou > iou_thres):
-				if(gt_ele['class']==pred_ele[4]):
-					found_match = True
-					break
-		if(not found_match):
-			fn += 1
+			found_match = False
+			for gt_ele in gt_bbox:
+				calc_iou = calculate_overlap(gt_ele, pred_ele)
+				if(calc_iou > iou_thres):
+					if(gt_ele['class']==pred_ele[4]):
+						tp += 1
+						found_match = True
+						break
+			if(not found_match):
+				fp += 1
+
+		for gt_ele in gt_bbox:
+			found_match = False
+			for pred_ele in pred_bbox:
+				calc_iou = calculate_overlap(gt_ele, pred_ele)
+				if(calc_iou > iou_thres):
+					if(gt_ele['class']==pred_ele[4]):
+						found_match = True
+						break
+			if(not found_match):
+				fn += 1
 
 	return tp, fp, fn
