@@ -1,3 +1,5 @@
 data/
 keras-frcnn/resnet50_weights_tf_dim_ordering_tf_kernels.hdf5
+keras-frcnn/result/
 keras-frcnn/model_frcnn.hdf5
+keras-frcnn/model_frcnn_voc.hdf5
