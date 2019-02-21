@@ -43,7 +43,7 @@ git submodule update --init --recursive <submodule2_name>
 
 The work done here is solely possible due to the following repositories. I have cloned these repositories, cleaned them and created my own submodules, however the majority of code is from the original repo.
 
-### [keras-frcnn](https://github.com/prakhar24/keras-frcnn)
+### [keras-frcnn](https://github.com/prakharg24/keras-frcnn)
 * Keras implementation of Faster R-CNN for object detection
 * Known issues with keras version >=2.2.2
 * keras version==2.1.6 and tensorflow version==1.8.0 recommended for smooth working
