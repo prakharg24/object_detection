@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 from utils import read_json
+import matplotlib.pyplot as plt
 
 def calculate_overlap(gt_ele, pred_ele):
 	x1_t, y1_t, x2_t, y2_t = int(gt_ele['xmin']), int(gt_ele['ymin']), int(gt_ele['xmax']), int(gt_ele['ymax'])
@@ -24,8 +25,10 @@ def get_score(gt_bbox, pred_bbox_orig, iou_thres, conf_thr):
 
 	pred_bbox = []
 	for ele in pred_bbox_orig:
-		if(ele[5]>=conf_thr):
+		if(ele[5]/100>=conf_thr):
 			pred_bbox.append(ele)
+
+	# print(len(pred_bbox_orig), len(pred_bbox))
 
 	tp, fp, fn = 0, 0, 0
 
@@ -65,17 +68,19 @@ if __name__ == '__main__':
 	compl_data = compl_data['data']
 
 	iou = []
-	for i in range(1):
+	for i in range(10):
 		iou.append(0.5 + i*0.05)
 	avg_prec_arr = []
 
 	thr_dict = {}
 
-    for val in compl_data:
-        for pred_info in val['pred_anno']:
-        	score = pred_info[5]
-            if score not in thr_dict:
-                thr_dict[score] = 1
+	for val in compl_data:
+		for pred_info in val['pred_anno']:
+			score = pred_info[5]/100
+			if score not in thr_dict:
+				thr_dict[score] = 1
+
+	thr_dict = sorted(thr_dict.keys())
 
 	for iou_thres in iou:
 		prec = []
@@ -104,6 +109,13 @@ if __name__ == '__main__':
 
 		precisions = np.array(prec)
 		recalls = np.array(recc)
+		# print(recalls)
+		# plt.plot(recalls, precisions, 'ro')
+		# plt.show()
+		# plt.plot(thr_dict, precisions, 'ro')
+		# plt.show()
+		# plt.plot(thr_dict, recalls, 'ro')
+		# plt.show()
 		prec_at_rec = []
 		for recall_level in np.linspace(0.0, 1.0, 11):
 			try:
