@@ -23,8 +23,12 @@ def calculate_overlap(gt_ele, pred_ele):
 
 def get_score(gt_bbox, pred_bbox_orig, iou_thres, conf_thr):
 
+	imp_cls = ['cow', 'dog']
+
 	pred_bbox = []
 	for ele in pred_bbox_orig:
+		if(ele[4] not in imp_cls):
+			continue
 		if(ele[5]/100>=conf_thr):
 			pred_bbox.append(ele)
 
@@ -61,11 +65,15 @@ if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--input_json', type=str, required=True, help='Input json file address')
+	parser.add_argument('--pred_json', type=str, required=True, help='Pred json file address')
 	
 	args = parser.parse_args()
 
-	compl_data = read_json(args.input_json)
-	compl_data = compl_data['data']
+	gt_data = read_json(args.input_json)
+	gt_data = gt_data['data']
+
+	pred_data = read_json(args.pred_json)
+	pred_data = pred_data['data']
 
 	iou = []
 	for i in range(10):
@@ -74,7 +82,7 @@ if __name__ == '__main__':
 
 	thr_dict = {}
 
-	for val in compl_data:
+	for val in pred_data:
 		for pred_info in val['pred_anno']:
 			score = pred_info[5]/100
 			if score not in thr_dict:
@@ -82,14 +90,18 @@ if __name__ == '__main__':
 
 	thr_dict = sorted(thr_dict.keys())
 
+	pred_dict = {}
+	for val in pred_data:
+		pred_dict[val['image_name']] = val['pred_anno']
+
 	for iou_thres in iou:
 		prec = []
 		recc = []
 
 		for conf_thr in thr_dict:
 			ttp, tfp, tfn = 0, 0, 0
-			for ele in compl_data:
-				tp, fp, fn = get_score(ele['annotations'], ele['pred_anno'], iou_thres, conf_thr)
+			for ele in gt_data:
+				tp, fp, fn = get_score(ele['annotations'], pred_dict[ele['image_name']], iou_thres, conf_thr)
 				ttp += tp
 				tfp += fp
 				tfn += fn
@@ -125,6 +137,7 @@ if __name__ == '__main__':
 				prec = 0.0
 			prec_at_rec.append(prec)
 		avg_prec = np.mean(prec_at_rec)
+		print(avg_prec)
 		avg_prec_arr.append(avg_prec)
 
 	print(avg_prec_arr)
