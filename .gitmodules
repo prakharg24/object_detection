@@ -1,3 +1,6 @@
 [submodule "keras-frcnn"]
 	path = keras-frcnn
 	url = https://github.com/prakharg24/keras-frcnn.git
+[submodule "Mask_RCNN"]
+	path = Mask_RCNN
+	url = https://github.com/prakharg24/Mask_RCNN.git
