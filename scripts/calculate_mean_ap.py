@@ -21,7 +21,7 @@ def calculate_overlap(gt_ele, pred_ele):
 	iou = inter_area / (true_box_area + pred_box_area - inter_area)
 	return iou
 
-def get_score(gt_bbox, pred_bbox_orig, iou_thres, conf_thr):
+def get_score(gt_bbox, pred_bbox_orig, iou_thres, conf_thr, img_width, img_height):
 
 	imp_cls = ['cow', 'dog']
 
@@ -30,9 +30,12 @@ def get_score(gt_bbox, pred_bbox_orig, iou_thres, conf_thr):
 		if(ele[4] not in imp_cls):
 			continue
 		if(ele[5]/100>=conf_thr):
-			pred_bbox.append(ele)
+			pred_bbox.append([max(0, int(ele[0])), max(0, int(ele[1])), min(int(img_width), int(ele[2])), min(int(img_height), int(ele[3])), ele[4], ele[5]])
+			# pred_bbox.append(ele)
 
 	# print(len(pred_bbox_orig), len(pred_bbox))
+
+	# print(gt_bbox, pred_bbox)
 
 	tp, fp, fn = 0, 0, 0
 
@@ -40,7 +43,7 @@ def get_score(gt_bbox, pred_bbox_orig, iou_thres, conf_thr):
 		found_match = False
 		for gt_ele in gt_bbox:
 			calc_iou = calculate_overlap(gt_ele, pred_ele)
-			if(calc_iou > iou_thres):
+			if(calc_iou >= iou_thres):
 				if(gt_ele['class']==pred_ele[4]):
 					tp += 1
 					found_match = True
@@ -52,7 +55,7 @@ def get_score(gt_bbox, pred_bbox_orig, iou_thres, conf_thr):
 		found_match = False
 		for pred_ele in pred_bbox:
 			calc_iou = calculate_overlap(gt_ele, pred_ele)
-			if(calc_iou > iou_thres):
+			if(calc_iou >= iou_thres):
 				if(gt_ele['class']==pred_ele[4]):
 					found_match = True
 					break
@@ -101,7 +104,7 @@ if __name__ == '__main__':
 		for conf_thr in thr_dict:
 			ttp, tfp, tfn = 0, 0, 0
 			for ele in gt_data:
-				tp, fp, fn = get_score(ele['annotations'], pred_dict[ele['image_name']], iou_thres, conf_thr)
+				tp, fp, fn = get_score(ele['annotations'], pred_dict[ele['image_name']], iou_thres, conf_thr, ele['width'], ele['height'])
 				ttp += tp
 				tfp += fp
 				tfn += fn
